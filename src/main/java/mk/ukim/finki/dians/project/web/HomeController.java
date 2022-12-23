@@ -4,7 +4,9 @@ import mk.ukim.finki.dians.project.service.AmenityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.stream.Collectors;
 
@@ -23,5 +25,15 @@ public class HomeController {
         model.addAttribute("banks", this.amenityService.findByType("Bank"));
         model.addAttribute("atms", this.amenityService.findByType("ATM"));
         return "main";
+    }
+
+    @PostMapping("/filter")
+    public String getFilter(@RequestParam String bankChoice,
+                            @RequestParam String type) {
+
+        /*todo
+        */
+
+        return "redirect:/home";
     }
 }

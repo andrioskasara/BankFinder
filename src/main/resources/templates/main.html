@@ -142,6 +142,20 @@
             background-color: #737B80;
             padding: 5px 20px 5px 20px;
         }
+        .filter-btn{
+            float: right;
+            border-radius: 12px;
+            color: whitesmoke;
+            background-color: #737B80;
+            text-align: center;
+            justify-content: center;
+            height: 25px;
+            width: 75px;
+            cursor: pointer;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
 
         /*map dropdownList */
         #dropdownBankChoice {
@@ -234,7 +248,7 @@
     </div>
     <!--list banks-->
     <div class="center" id="mapCanvas">
-        <h1>Map View</h1>
+        <!--<h1>Map View</h1>-->
 
 
         <!--filter-->
@@ -276,6 +290,7 @@
 
                 </div>
             </div>
+            <input type="submit" th:value="Filter" class="filter-btn"/>
         </form>
         <!--filter-->
 
