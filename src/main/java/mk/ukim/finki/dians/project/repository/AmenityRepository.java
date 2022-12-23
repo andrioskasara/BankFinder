@@ -69,6 +69,13 @@ public class AmenityRepository {
         return list.stream().filter(r -> r.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
     }
 
+    public List<Amenity> findByNameAndType(String name, String type) {
+        List<Amenity> temp = list.stream().filter(r -> r.getName().equalsIgnoreCase(name) && r.getType().equalsIgnoreCase(type)).collect(Collectors.toList());
+        for(int i =0; i<temp.size(); i++) {
+            System.out.println(temp.get(i));
+        }
+        return temp;
+    }
     public List<Amenity> search(String text) {
         return list.stream().filter(r -> r.getName().equalsIgnoreCase(text)).collect(Collectors.toList());
     }

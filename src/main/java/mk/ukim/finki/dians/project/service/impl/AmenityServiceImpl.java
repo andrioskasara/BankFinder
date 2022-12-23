@@ -42,6 +42,11 @@ public class AmenityServiceImpl implements AmenityService {
     }
 
     @Override
+    public List<Amenity> findByNameAndType(String name, String type) {
+        return this.amenityRepository.findByNameAndType(name, type);
+    }
+
+    @Override
     public List<Amenity> search(String text) {
         return this.amenityRepository.search(text);
     }

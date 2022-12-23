@@ -2,11 +2,19 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+
     <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css"
           type="text/css">
     <script src="//unpkg.com/leaflet-gesture-handling"></script>
+
+
     <title>Home page</title>
     <style>
         /* whole body */
@@ -128,6 +136,7 @@
         #checkBoxButtons > span:nth-child(1) {
             margin-right: 10px;
         }
+
         #checkBoxButtons > span:nth-child(2) {
             margin-right: 10px;
         }
@@ -142,7 +151,8 @@
             background-color: #737B80;
             padding: 5px 20px 5px 20px;
         }
-        .filter-btn{
+
+        .filter-btn {
             float: right;
             border-radius: 12px;
             color: whitesmoke;
@@ -256,16 +266,16 @@
             <div id="dropdownBankChoice">
                 <h4 id="labelBanks">Одберете ја посакуваната банка:</h4>
                 <label for="banks"></label>
-                <select onchange="getData()" name="bankChoice" id="banks">
-                    <option value="komercijalna">Komercijalna</option>
-                    <option value="halkbank">Halkbank</option>
-                    <option value="sparkasse">Sparkasse</option>
-                    <option value="nlb">NLB</option>
-                    <option value="stopanska">Stopanska</option>
-                    <option value="ttk">TTK</option>
-                    <option value="unibank">Unibank</option>
-                    <option value="procredit">Procredit</option>
-                    <option value="silkroad">Silkroad</option>
+                <select name="bankChoice" id="banks">
+                    <option value="Komercijalna banka">Komercijalna</option>
+                    <option value="Halkbank">Halkbank</option>
+                    <option value="Sparkasse">Sparkasse</option>
+                    <option value="Nlb banka">NLB</option>
+                    <option value="Stopanska banka">Stopanska</option>
+                    <option value="Ttk banka">TTK</option>
+                    <option value="Unibank">Unibank</option>
+                    <option value="Procredit banka">Procredit</option>
+                    <option value="Silkroad banka">Silkroad</option>
                 </select>
             </div>
 
@@ -274,17 +284,17 @@
                 <div id="checkBoxButtons">
 
                     <span class="checkBoxButtonName">Сите
-                        <label><input type="radio" checked="checked" name="type" value="all" id="all"></label>
+                        <input type="radio" name="type" value="All" id="all">
                          <span class="checkmark"></span>
                     </span>
 
                     <span class="checkBoxButtonName">Филијали
-                        <label><input type="radio" name="type" value="bank" id="bank"></label>
+                        <input type="radio" name="type" value="Bank" id="bank">
                         <span class="checkmark"></span>
                     </span>
 
                     <span class="checkBoxButtonName">ATM
-                        <label><input type="radio" name="type" value="atm" id="atm"></label>
+                        <input type="radio" name="type" value="ATM" id="atm">
                         <span class="checkmark"></span>
                     </span>
 
@@ -297,6 +307,15 @@
 
         <!--search-->
         <!--search-->
+        <ul th:if="${places} != null">
+            <li th:each="place : ${places}">
+                <div th:value="${place.getName()}"></div>
+                <div th:value="${place.getType()}"></div>
+                <div th:value="${place.getLatitude()}"></div>
+                <div th:value="${place.getLongitude()}"></div>
+            </li>
+        </ul>
+
 
         <div id="map"></div>
 
@@ -322,17 +341,16 @@
         gestureHandling: true
     });
 
-
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
     }).addTo(map);
+
 
     function val() {
         return document.getElementById("banks").value;
     }
 
     let bankArr = [];
-
     getData();
 
     async function getData() {

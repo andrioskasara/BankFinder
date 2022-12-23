@@ -1,5 +1,6 @@
 package mk.ukim.finki.dians.project.web;
 
+import mk.ukim.finki.dians.project.model.Amenity;
 import mk.ukim.finki.dians.project.service.AmenityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -21,7 +23,6 @@ public class HomeController {
 
     @GetMapping
     public String getHomePage(Model model){
-        model.addAttribute("places", this.amenityService.listAll());
         model.addAttribute("banks", this.amenityService.findByType("Bank"));
         model.addAttribute("atms", this.amenityService.findByType("ATM"));
         return "main";
@@ -29,10 +30,20 @@ public class HomeController {
 
     @PostMapping("/filter")
     public String getFilter(@RequestParam String bankChoice,
-                            @RequestParam String type) {
+                            @RequestParam String type, Model model) {
 
-        /*todo
-        */
+        if(bankChoice != null && !bankChoice.equals("") && type != null && !type.equals("")){
+            if(type.equals("All")){
+                model.addAttribute("chosen", this.amenityService.findByName(bankChoice));
+            }
+            else{
+                model.addAttribute("chosen", this.amenityService.findByNameAndType(bankChoice, type));
+            }
+        }
+        System.out.println(this.amenityService.findByNameAndType(bankChoice, type));
+
+        System.out.println(bankChoice);
+        System.out.println(type);
 
         return "redirect:/home";
     }
