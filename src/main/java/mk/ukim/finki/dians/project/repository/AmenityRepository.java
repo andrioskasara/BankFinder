@@ -6,15 +6,12 @@ import org.springframework.stereotype.Repository;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
 public class AmenityRepository {
-    public static List<Amenity> list = new LinkedList<>();
+    public static List<Amenity> list = new ArrayList<>();
 
     public AmenityRepository() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("src/main/java/mk/ukim/finki/dians/project/repository/data.csv"));
@@ -22,15 +19,15 @@ public class AmenityRepository {
         int flag = 0;
         Random random = new Random();
 
-        while((row = reader.readLine())!= null){
-            String []data = row.split(",");
-            if ( flag > 0 ){
+        while ((row = reader.readLine()) != null) {
+            String[] data = row.split(",");
+            if (flag > 0) {
                 list.add(new Amenity(data[0], data[1], data[2],
                         Double.parseDouble(data[3]), Double.parseDouble(data[4])));
             }
             flag++;
         }
-        for(int i = 0; i<list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             System.out.println("\n" + i);
             System.out.println("type: " + list.get(i).getType());
             System.out.println("id: " + list.get(i).getId());
@@ -39,6 +36,27 @@ public class AmenityRepository {
             System.out.println("lon: " + list.get(i).getLongitude());
         }
     }
+
+    public List<Amenity> listAll() {
+        return list;
+    }
+
+    public List<Amenity> listAllBanks() {
+        List<Amenity> temp = findByType("Bank");
+        System.out.println(temp);
+        List<Amenity> banks = new ArrayList<>();
+        int j = 0;
+        for (int i = 0; i < temp.size() - 1; i++) {
+            if (!temp.get(i).getName().equals(temp.get(i + 1).getName())) {
+                banks.set(j++, temp.get(i));
+            }
+            banks.set(j++, temp.get(temp.size() - 1));
+        }
+        System.out.println(banks);
+        return banks;
+    }
+
+
     public Optional<Amenity> findById(String id) {
         return list.stream().filter(r -> r.getId().equals(id)).findFirst();
     }
@@ -52,6 +70,6 @@ public class AmenityRepository {
     }
 
     public List<Amenity> search(String text) {
-        return list.stream().filter(r-> r.getName().equalsIgnoreCase(text)).collect(Collectors.toList());
+        return list.stream().filter(r -> r.getName().equalsIgnoreCase(text)).collect(Collectors.toList());
     }
 }

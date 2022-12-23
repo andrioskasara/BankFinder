@@ -20,4 +20,5 @@ public class Amenity {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
 }

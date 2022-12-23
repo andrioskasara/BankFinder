@@ -17,6 +17,16 @@ public class AmenityServiceImpl implements AmenityService {
     }
 
     @Override
+    public List<Amenity> listAll() {
+        return this.amenityRepository.listAll();
+    }
+
+    @Override
+    public List<Amenity> listAllBanks() {
+        return this.amenityRepository.listAllBanks();
+    }
+
+    @Override
     public Optional<Amenity> findById(String id) {
         return this.amenityRepository.findById(id);
     }
